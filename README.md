@@ -1,6 +1,6 @@
-﻿# 🎮 GameNetTwo - 3D OpenGL Rendering with Silk.NET 🚀
+﻿# 🎮 Game.Net - 3D OpenGL Rendering with Silk.NET 🚀
 
-Welcome to **GameNetTwo**! This is a high-performance 3D graphics demonstration built using **C#**, **.NET 10**, and the powerful **Silk.NET** library to interface with **OpenGL**.
+Welcome to **Game.Net**! This is a high-performance 3D graphics demonstration built using **C#**, **.NET 10**, and the powerful **Silk.NET** library to interface with **OpenGL**.
 
 ---
 
@@ -43,8 +43,8 @@ Make sure you have the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotne
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-repo/GameNetTwo.git
-   cd GameNetTwo
+   git clone https://github.com/your-repo/Game.Net.git
+   cd Game.Net
    ```
 
 2. **Restore dependencies:**
@@ -54,7 +54,7 @@ Make sure you have the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotne
 
 3. **Run the application:**
    ```bash
-   dotnet run --project GameNetTwo
+   dotnet run --project Game.Net
    ```
 
 ---
@@ -69,9 +69,9 @@ Make sure you have the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotne
 
 ## 📁 Project Structure
 
-- `GameNetTwo/Program.cs`: The main entry point and rendering loop logic.
-- `GameNetTwo/Shader.cs`: A helper class for managing OpenGL shader programs.
-- `GameNetTwo/Shaders/`: Contains the `.vert` (Vertex) and `.frag` (Fragment) GLSL files.
+- `Game.Net/Program.cs`: The main entry point and rendering loop logic.
+- `Game.Net/Shader.cs`: A helper class for managing OpenGL shader programs.
+- `Game.Net/Shaders/`: Contains the `.vert` (Vertex) and `.frag` (Fragment) GLSL files.
 
 ---
 
