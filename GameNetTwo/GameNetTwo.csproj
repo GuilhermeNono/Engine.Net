@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net10.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Silk.NET" Version="2.22.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Shaders\Vertex\shader.vert" />
+      <EmbeddedResource Include="Shaders\Vertex\shader.vert">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="Shaders\Fragments\shader.frag" />
+      <EmbeddedResource Include="Shaders\Fragments\shader.frag">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
+</Project>

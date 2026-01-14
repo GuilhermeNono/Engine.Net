@@ -1,0 +1,58 @@
+## [ .NET / C# ]
+# Pasta de saída de compilação
+[Bb]in/
+[Oo]bj/
+
+# Arquivos gerados pelo MSBuild
+Generated/
+
+# Pacotes NuGet (pastas de restore)
+*.nupkg
+**/[Pp]ackages/*
+!**/[Pp]ackages/build/
+
+# Cache do .NET
+.razor-cache/
+
+## [ Visual Studio ]
+.vs/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+## [ Visual Studio Code ]
+.vscode/
+# Se você quiser manter as configurações de debug, comente a linha acima e use as de baixo:
+# .vscode/*
+# !.vscode/launch.json
+# !.vscode/tasks.json
+
+## [ Sistema Operacional ]
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+## [ Logs e Temporários ]
+*.log
+*.tmp
+
+## [ Gráficos e Shaders ]
+# Caso você use ferramentas que geram cache de shaders compilados (Vulkan/OpenGL)
+*.spv
+*.spirv
+shader_cache/
+
+## [ Ferramentas Externas (Baseado nos seus projetos anteriores) ]
+# Hoppscotch / Postman
+.hoppscotch/
+postman_collection.json
+
+# Publicação / Deploy
+publish/
