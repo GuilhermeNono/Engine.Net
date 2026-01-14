@@ -80,5 +80,3 @@ Make sure you have the [.NET 10 SDK](https://dotnet.microsoft.com/download/dotne
 This project is open-source. Feel free to use and modify it for your own learning or projects! 🆓
 
 ---
-
-Happy coding! 👩‍💻👨‍💻
