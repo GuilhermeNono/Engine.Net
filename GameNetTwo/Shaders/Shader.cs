@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using Silk.NET.OpenGL;
 
-namespace GameNetTwo;
+namespace GameNetTwo.Shaders;
 
 public class Shader : IDisposable
 {
@@ -53,6 +53,22 @@ public class Shader : IDisposable
         if (location == -1) return;
         
         _gl.Uniform4(location, value);
+    }
+    
+    public void SetUniform(string name, Vector2 value)
+    {
+        int location = _gl.GetUniformLocation(handle, name);
+        if (location == -1) return;
+        
+        _gl.Uniform2(location, value);
+    }
+    
+    public void SetUniform(string name, int value)
+    {
+        int location = _gl.GetUniformLocation(handle, name);
+        if (location == -1) return;
+        
+        _gl.Uniform1(location, value);
     }
 
     public void Dispose()

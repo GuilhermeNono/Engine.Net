@@ -3,6 +3,8 @@ using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
+using Shader = GameNetTwo.Shaders.Shader;
+using Texture = GameNetTwo.Shaders.Textures.Texture;
 
 namespace GameNetTwo;
 
@@ -12,65 +14,72 @@ class Program
     private static GL _gl;
     private static IInputContext _input;
     private static Shader _shader;
+    private static Texture _texture;
 
     private static int _width = 800;
     private static int _height = 600;
-    
+
     private static uint _vbo;
     private static uint _vao;
 
-    private static readonly float[] _vertices = 
-    {
-        // POSIÇÃO (X,Y,Z)    // COR (R,G,B)
-    
-        // Face Traseira (Vermelha)
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,
+    private static readonly float[] _vertices =
+    [
+        // POSIÇÃO (X,Y,Z)    // TEXTURE (U, V)
 
-        // Face Frontal (Verde)
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 0.0f,
+        // // Face Traseira
+        -0.5f, -0.5f, -0.5f, 0f, 0f,
+         0.5f, -0.5f, -0.5f, 1f, 0f,
+         0.5f,  0.5f, -0.5f, 1f, 1f,
+        
+         0.5f,  0.5f, -0.5f, 1f, 1f,
+        -0.5f,  0.5f, -0.5f, 0f, 1f,
+        -0.5f, -0.5f, -0.5f, 0f, 0f,
+        // //
+        // // // Face Frontal
+        -0.5f, -0.5f,  0.5f, 0f, 0f,
+         0.5f, -0.5f,  0.5f, 1f, 0f,
+         0.5f,  0.5f,  0.5f, 1f, 1f,
+        
+         0.5f,  0.5f,  0.5f, 1f, 1f,
+        -0.5f,  0.5f,  0.5f, 0f, 1f,
+        -0.5f, -0.5f,  0.5f, 0f, 0f,
 
-        // Face Esquerda (Azul)
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 1.0f,
+        // // Face Esquerda
+        -0.5f,  0.5f,  0.5f, 1f, 1f,
+        -0.5f,  0.5f, -0.5f, 0f, 1f,
+        -0.5f, -0.5f, -0.5f, 0f, 0f,
+        
+        -0.5f, -0.5f, -0.5f, 0f, 0f,
+        -0.5f, -0.5f,  0.5f, 1f, 0f,
+        -0.5f,  0.5f,  0.5f, 1f, 1f,
+        //
+        // // Face Direita
+        0.5f,  0.5f,  0.5f, 0f, 0f,
+        0.5f,  0.5f, -0.5f, 0f, 1f,
+        0.5f, -0.5f, -0.5f, 1f, 1f,
+        //  
+        0.5f, -0.5f, -0.5f, 1f, 1f,
+         0.5f, -0.5f,  0.5f, 0f, 0f,
+         0.5f,  0.5f,  0.5f, 1f, 0f,
 
-        // Face Direita (Amarela)
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f, 0.0f,
-
-        // Face Inferior (Ciano)
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 1.0f, 1.0f,
-
-        // Face Superior (Magenta)
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 0.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  1.0f, 0.0f, 1.0f
-    };
+        // Face Inferior
+        -0.5f, -0.5f, -0.5f, 0f, 1f,
+         0.5f, -0.5f, -0.5f, 1f, 1f,
+         0.5f, -0.5f,  0.5f, 1f, 0f,
+        
+         0.5f, -0.5f,  0.5f, 1f, 0f,
+        -0.5f, -0.5f,  0.5f, 0f, 0f,
+        -0.5f, -0.5f, -0.5f, 0f, 1f,
+        //
+        // // Face Superior
+        -0.5f,  0.5f, -0.5f, 0f, 1f,
+         0.5f,  0.5f, -0.5f, 1f, 1f,
+         0.5f,  0.5f,  0.5f, 1f, 0f,
+        
+         0.5f,  0.5f,  0.5f, 1f, 0f,
+        -0.5f,  0.5f,  0.5f, 0f, 0f,
+        -0.5f,  0.5f, -0.5f, 0f, 1f,
+    ];
 
     static void Main()
     {
@@ -93,7 +102,7 @@ class Program
     {
         _width = size.X;
         _height = size.Y;
-        
+
         _gl.Viewport(0, 0, (uint)_width, (uint)_height);
     }
 
@@ -101,6 +110,7 @@ class Program
     {
         _gl = _window.CreateOpenGL();
         _shader = new Shader(_gl, "shader.vert", "shader.frag");
+        _texture = new Texture(_gl, "image.png");
 
         _vao = _gl.GenVertexArray();
         _gl.BindVertexArray(_vao);
@@ -128,17 +138,18 @@ class Program
 
         unsafe
         {
-            uint stride = 6 * sizeof(float);
-            
+            uint stride = 5 * sizeof(float);
+
             _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
             _gl.EnableVertexAttribArray(0);
-            
-            _gl.VertexAttribPointer(1, 3, VertexAttribPointerType.Float, false, stride, 3 *  sizeof(float));
+
+            _gl.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, 2 * sizeof(float));
             _gl.EnableVertexAttribArray(1);
         }
 
 
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
+        _gl.Enable(EnableCap.DepthTest);
         _gl.BindVertexArray(0);
     }
 
@@ -152,9 +163,12 @@ class Program
 
         _shader.Use();
 
-        float angle = (float)_window.Time;
+        _texture.Bind();
+        _shader.SetUniform("uTexture", 0);
         
-        Matrix4x4 rotation = Matrix4x4.CreateRotationX(angle) *  Matrix4x4.CreateRotationY(angle);
+        float angle = (float)_window.Time;
+
+        Matrix4x4 rotation = Matrix4x4.CreateRotationX(angle) * Matrix4x4.CreateRotationY(angle);
         Matrix4x4 view = Matrix4x4.CreateTranslation(0f, 0f, -2f);
         Matrix4x4 projection = Matrix4x4.CreatePerspectiveFieldOfView(
             (float)(Math.PI / 4.0),

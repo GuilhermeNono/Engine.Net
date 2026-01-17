@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="Silk.NET" Version="2.22.0" />
+      <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     </ItemGroup>
 
     <ItemGroup>
@@ -19,6 +20,10 @@
       </EmbeddedResource>
       <None Remove="Shaders\Fragments\shader.frag" />
       <EmbeddedResource Include="Shaders\Fragments\shader.frag">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="Shaders\Textures\Unit\image.png" />
+      <EmbeddedResource Include="Shaders\Textures\Unit\image.png">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
     </ItemGroup>
