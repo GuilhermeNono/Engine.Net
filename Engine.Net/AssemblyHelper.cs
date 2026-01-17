@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace GameNetTwo;
+namespace Engine.Net;
 
 public static class AssemblyHelper
 {
@@ -10,8 +10,8 @@ public static class AssemblyHelper
 
         var shaderPath = type switch
         {
-            ShaderType.Vertex => "GameNetTwo.Shaders.Vertex.",
-            ShaderType.Fragment => "GameNetTwo.Shaders.Fragments.",
+            ShaderType.Vertex => "Engine.Net.Shaders.Vertex.",
+            ShaderType.Fragment => "Engine.Net.Shaders.Fragments.",
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 

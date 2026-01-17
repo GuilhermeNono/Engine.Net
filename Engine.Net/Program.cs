@@ -3,18 +3,21 @@ using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
-using Shader = GameNetTwo.Shaders.Shader;
-using Texture = GameNetTwo.Shaders.Textures.Texture;
+using Shader = Engine.Net.Shaders.Shader;
+using Texture = Engine.Net.Shaders.Textures.Texture;
 
-namespace GameNetTwo;
+namespace Engine.Net;
+
+using Shaders_Shader = Shaders.Shader;
+using Textures_Texture = Shaders.Textures.Texture;
 
 class Program
 {
     private static IWindow _window;
     private static GL _gl;
     private static IInputContext _input;
-    private static Shader _shader;
-    private static Texture _texture;
+    private static Shaders_Shader _shader;
+    private static Textures_Texture _texture;
 
     private static int _width = 800;
     private static int _height = 600;
@@ -106,8 +109,8 @@ class Program
     private static void OnLoad()
     {
         _gl = _window.CreateOpenGL();
-        _shader = new Shader(_gl, "shader.vert", "shader.frag");
-        _texture = new Texture(_gl, "image.png");
+        _shader = new Shaders_Shader(_gl, "shader.vert", "shader.frag");
+        _texture = new Textures_Texture(_gl, "image.png");
 
         _vao = _gl.GenVertexArray();
         _gl.BindVertexArray(_vao);

@@ -1,4 +1,4 @@
-﻿namespace GameNetTwo;
+﻿namespace Engine.Net;
 
 public enum ShaderType
 {
