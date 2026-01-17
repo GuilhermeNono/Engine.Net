@@ -1,4 +1,4 @@
-﻿namespace Engine.Net;
+﻿namespace EngineNet;
 
 public enum ShaderType
 {

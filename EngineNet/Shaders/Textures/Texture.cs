@@ -3,7 +3,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace Engine.Net.Shaders.Textures;
+namespace EngineNet.Shaders.Textures;
 
 public class Texture : IDisposable
 {
@@ -17,7 +17,7 @@ public class Texture : IDisposable
         gl.BindTexture(TextureTarget.Texture2D, _handle);
         
         //Carregar imagem
-        using var img = Image.Load<Rgba32>(AssemblyHelper.GetStreamFromResource($"Engine.Net.Shaders.Textures.Unit.{path}"));
+        using var img = Image.Load<Rgba32>(AssemblyHelper.GetStreamFromResource($"EngineNet.Shaders.Textures.Unit.{path}"));
 
         //Tip: O OpenGL le de cima para baixo. E necessario inverter
         img.Mutate(x => x.Flip(FlipMode.Vertical));

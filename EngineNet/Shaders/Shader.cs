@@ -2,7 +2,7 @@
 using System.Reflection;
 using Silk.NET.OpenGL;
 
-namespace Engine.Net.Shaders;
+namespace EngineNet.Shaders;
 
 public class Shader : IDisposable
 {
@@ -15,8 +15,8 @@ public class Shader : IDisposable
 
         var shaderPath = type switch
         {
-            ShaderType.Vertex => "Engine.Net.Shaders.Vertex",
-            ShaderType.Fragment => "Engine.Net.Shaders.Fragments",
+            ShaderType.Vertex => "EngineNet.Shaders.Vertex",
+            ShaderType.Fragment => "EngineNet.Shaders.Fragments",
             _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
         };
 

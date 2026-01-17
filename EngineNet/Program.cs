@@ -3,10 +3,10 @@ using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
-using Shader = Engine.Net.Shaders.Shader;
-using Texture = Engine.Net.Shaders.Textures.Texture;
+using Shader = EngineNet.Shaders.Shader;
+using Texture = EngineNet.Shaders.Textures.Texture;
 
-namespace Engine.Net;
+namespace EngineNet;
 
 using Shaders_Shader = Shaders.Shader;
 using Textures_Texture = Shaders.Textures.Texture;
