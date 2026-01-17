@@ -14,12 +14,19 @@ Generated/
 # Cache do .NET
 .razor-cache/
 
+## [ JetBrains (Rider) ]
+.idea/
+*.sln.iml
+*.archived
+*.sln.dotSettings.user
+
 ## [ Visual Studio ]
 .vs/
 *.user
 *.userosscache
 *.suo
 *.sln.docstates
+*.slnx.user
 
 ## [ Visual Studio Code ]
 .vscode/
@@ -42,6 +49,8 @@ Desktop.ini
 ## [ Logs e Temporários ]
 *.log
 *.tmp
+*.bak
+*.swp
 
 ## [ Gráficos e Shaders ]
 # Caso você use ferramentas que geram cache de shaders compilados (Vulkan/OpenGL)
