@@ -15,9 +15,9 @@ public class Texture : IDisposable
         _gl = gl;
         _handle = _gl.GenTexture();
         gl.BindTexture(TextureTarget.Texture2D, _handle);
-
+        
         //Carregar imagem
-        using var img = Image.Load<Rgba32>($"Shaders/Textures/Unit/{path}");
+        using var img = Image.Load<Rgba32>(AssemblyHelper.GetStreamFromResource($"GameNetTwo.Shaders.Textures.Unit.{path}"));
 
         //Tip: O OpenGL le de cima para baixo. E necessario inverter
         img.Mutate(x => x.Flip(FlipMode.Vertical));

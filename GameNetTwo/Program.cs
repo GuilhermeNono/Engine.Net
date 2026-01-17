@@ -24,61 +24,56 @@ class Program
 
     private static readonly float[] _vertices =
     [
-        // POSIÇÃO (X,Y,Z)    // TEXTURE (U, V)
+        // POSIÇÃO (X, Y, Z)  // TEXTURE (U, V)
+        
+        // Face Frontal (Z = 0.5f)
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        
+         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 
-        // // Face Traseira
-        -0.5f, -0.5f, -0.5f, 0f, 0f,
-         0.5f, -0.5f, -0.5f, 1f, 0f,
-         0.5f,  0.5f, -0.5f, 1f, 1f,
-        
-         0.5f,  0.5f, -0.5f, 1f, 1f,
-        -0.5f,  0.5f, -0.5f, 0f, 1f,
-        -0.5f, -0.5f, -0.5f, 0f, 0f,
-        // //
-        // // // Face Frontal
-        -0.5f, -0.5f,  0.5f, 0f, 0f,
-         0.5f, -0.5f,  0.5f, 1f, 0f,
-         0.5f,  0.5f,  0.5f, 1f, 1f,
-        
-         0.5f,  0.5f,  0.5f, 1f, 1f,
-        -0.5f,  0.5f,  0.5f, 0f, 1f,
-        -0.5f, -0.5f,  0.5f, 0f, 0f,
+        // Face Traseira (Z = -0.5f)
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-        // // Face Esquerda
-        -0.5f,  0.5f,  0.5f, 1f, 1f,
-        -0.5f,  0.5f, -0.5f, 0f, 1f,
-        -0.5f, -0.5f, -0.5f, 0f, 0f,
-        
-        -0.5f, -0.5f, -0.5f, 0f, 0f,
-        -0.5f, -0.5f,  0.5f, 1f, 0f,
-        -0.5f,  0.5f,  0.5f, 1f, 1f,
-        //
-        // // Face Direita
-        0.5f,  0.5f,  0.5f, 0f, 0f,
-        0.5f,  0.5f, -0.5f, 0f, 1f,
-        0.5f, -0.5f, -0.5f, 1f, 1f,
-        //  
-        0.5f, -0.5f, -0.5f, 1f, 1f,
-         0.5f, -0.5f,  0.5f, 0f, 0f,
-         0.5f,  0.5f,  0.5f, 1f, 0f,
+        // Face Esquerda (X = -0.5f)
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        -0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 
-        // Face Inferior
-        -0.5f, -0.5f, -0.5f, 0f, 1f,
-         0.5f, -0.5f, -0.5f, 1f, 1f,
-         0.5f, -0.5f,  0.5f, 1f, 0f,
-        
-         0.5f, -0.5f,  0.5f, 1f, 0f,
-        -0.5f, -0.5f,  0.5f, 0f, 0f,
-        -0.5f, -0.5f, -0.5f, 0f, 1f,
-        //
-        // // Face Superior
-        -0.5f,  0.5f, -0.5f, 0f, 1f,
-         0.5f,  0.5f, -0.5f, 1f, 1f,
-         0.5f,  0.5f,  0.5f, 1f, 0f,
-        
-         0.5f,  0.5f,  0.5f, 1f, 0f,
-        -0.5f,  0.5f,  0.5f, 0f, 0f,
-        -0.5f,  0.5f, -0.5f, 0f, 1f,
+        // Face Direita (X = 0.5f)
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+        // Face Superior (Y = 0.5f)
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+
+        // Face Inferior (Y = -0.5f)
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
+         0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
     ];
 
     static void Main()
@@ -86,7 +81,9 @@ class Program
         var options = WindowOptions.Default;
         options.Size = new Vector2D<int>(_height, _width);
         options.Title = "Game Test";
-
+        
+        Silk.NET.Windowing.Glfw.GlfwWindowing.RegisterPlatform();
+        
         _window = Window.Create(options);
 
         _window.Load += OnLoad;
@@ -143,7 +140,7 @@ class Program
             _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
             _gl.EnableVertexAttribArray(0);
 
-            _gl.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, 2 * sizeof(float));
+            _gl.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
             _gl.EnableVertexAttribArray(1);
         }
 

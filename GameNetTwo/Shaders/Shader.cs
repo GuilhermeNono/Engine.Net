@@ -1,23 +1,41 @@
 ﻿using System.Numerics;
+using System.Reflection;
 using Silk.NET.OpenGL;
 
 namespace GameNetTwo.Shaders;
 
 public class Shader : IDisposable
 {
-    
     public uint handle;
     private GL _gl;
+
+    private string GetShaderDataFromAssembly(ShaderType type, string path)
+    {
+        var assembly = Assembly.GetExecutingAssembly();
+
+        var shaderPath = type switch
+        {
+            ShaderType.Vertex => "GameNetTwo.Shaders.Vertex",
+            ShaderType.Fragment => "GameNetTwo.Shaders.Fragments",
+            _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+        };
+
+        using var stream = assembly.GetManifestResourceStream($"{shaderPath}.{path}")
+                           ?? throw new Exception($"{type.ToString()} Shaders not found.");
+        
+        using var reader = new StreamReader(stream);
+        return reader.ReadToEnd();
+    }
 
     public Shader(GL gl, string vertexPath, string fragmentPath)
     {
         _gl = gl;
         
-        string vertexShaderSource = File.ReadAllText($"Shaders/Vertex/{vertexPath}");
-        string fragmentShaderSource = File.ReadAllText($"Shaders/Fragments/{fragmentPath}");
+        string vertexShaderSource = GetShaderDataFromAssembly(ShaderType.Vertex, vertexPath);
+        string fragmentShaderSource = GetShaderDataFromAssembly(ShaderType.Fragment, fragmentPath);
 
-        uint vertex = CompileShader(ShaderType.VertexShader, vertexShaderSource);
-        uint fragment = CompileShader(ShaderType.FragmentShader, fragmentShaderSource);
+        uint vertex = CompileShader(Silk.NET.OpenGL.ShaderType.VertexShader, vertexShaderSource);
+        uint fragment = CompileShader(Silk.NET.OpenGL.ShaderType.FragmentShader, fragmentShaderSource);
         
         handle = gl.CreateProgram();
         
@@ -35,7 +53,7 @@ public class Shader : IDisposable
         gl.DeleteShader(fragment);
     }
 
-    private uint CompileShader(ShaderType type, string code)
+    private uint CompileShader(Silk.NET.OpenGL.ShaderType type, string code)
     {
         uint shader = _gl.CreateShader(type);
         _gl.ShaderSource(shader, code);   

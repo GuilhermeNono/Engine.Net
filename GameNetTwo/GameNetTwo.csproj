@@ -10,22 +10,18 @@
 
     <ItemGroup>
       <PackageReference Include="Silk.NET" Version="2.22.0" />
+      <PackageReference Include="Silk.NET.Windowing.Glfw" Version="2.22.0" />
+      <PackageReference Include="Silk.NET.Input.Glfw" Version="2.22.0" />
       <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
     </ItemGroup>
 
     <ItemGroup>
       <None Remove="Shaders\Vertex\shader.vert" />
-      <EmbeddedResource Include="Shaders\Vertex\shader.vert">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </EmbeddedResource>
+      <EmbeddedResource Include="Shaders\Vertex\shader.vert" />
       <None Remove="Shaders\Fragments\shader.frag" />
-      <EmbeddedResource Include="Shaders\Fragments\shader.frag">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </EmbeddedResource>
+      <EmbeddedResource Include="Shaders\Fragments\shader.frag" />
       <None Remove="Shaders\Textures\Unit\image.png" />
-      <EmbeddedResource Include="Shaders\Textures\Unit\image.png">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </EmbeddedResource>
+      <EmbeddedResource Include="Shaders\Textures\Unit\image.png" />
     </ItemGroup>
 
 </Project>
