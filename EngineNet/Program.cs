@@ -22,7 +22,7 @@ class Program
 
     private static Camera _camera;
     private static Vector2 _lastMousePos;
-    
+
     private static int _width = 800;
     private static int _height = 600;
 
@@ -31,56 +31,61 @@ class Program
 
     private static readonly float[] _vertices =
     [
-        // POSIÇÃO (X, Y, Z)  // TEXTURE (U, V)
-        
-        // Face Frontal (Z = 0.5f)
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        
-         0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        // POSIÇÃO (X, Y, Z)   // TEXTURE (U, V)   // NORMAL (NX, NY, NZ)
 
-        // Face Traseira (Z = -0.5f)
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        // Face Frontal (Aponta para Z Positivo: 0, 0, 1)
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
 
-        // Face Esquerda (X = -0.5f)
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        -0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
 
-        // Face Direita (X = 0.5f)
-         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+        // Face Traseira (Aponta para Z Negativo: 0, 0, -1)
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
 
-        // Face Superior (Y = 0.5f)
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-         0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
 
-        // Face Inferior (Y = -0.5f)
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
-         0.5f, -0.5f,  0.5f,  1.0f, 1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, 1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+        // Face Esquerda (Aponta para X Negativo: -1, 0, 0)
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+
+        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
+
+        // Face Direita (Aponta para X Positivo: 1, 0, 0)
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+
+        // Face Superior (Aponta para Y Positivo: 0, 1, 0)
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+
+        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
+        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
+
+        // Face Inferior (Aponta para Y Negativo: 0, -1, 0)
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+        0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
+        0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+
+        0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
+        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f
     ];
 
     static void Main()
@@ -88,9 +93,9 @@ class Program
         WindowOptions options = WindowOptions.Default;
         options.Size = new Vector2D<int>(_height, _width);
         options.Title = "Game Test";
-        
+
         Silk.NET.Windowing.Glfw.GlfwWindowing.RegisterPlatform();
-        
+
         _window = Window.Create(options);
 
         _window.Load += OnLoad;
@@ -122,7 +127,7 @@ class Program
         IMouse mouse = _input.Mice[0];
         mouse.Cursor.CursorMode = CursorMode.Raw;
         mouse.MouseMove += OnMouseMove;
-        
+
         _vao = _gl.GenVertexArray();
         _gl.BindVertexArray(_vao);
 
@@ -148,13 +153,16 @@ class Program
 
         unsafe
         {
-            uint stride = 5 * sizeof(float);
+            uint stride = 8 * sizeof(float);
 
             _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
             _gl.EnableVertexAttribArray(0);
 
             _gl.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
             _gl.EnableVertexAttribArray(1);
+            
+            _gl.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, stride, 5 * sizeof(float));
+            _gl.EnableVertexAttribArray(2);
         }
 
 
@@ -170,31 +178,29 @@ class Program
             _lastMousePos = position;
             return;
         }
-        
+
         float xOffset = position.X - _lastMousePos.X;
         float yOffset = _lastMousePos.Y - position.Y;
         _lastMousePos = position;
-        
+
         _camera.Look(xOffset, yOffset);
     }
 
     private static void OnUpdate(double deltaTime)
     {
-
         IKeyboard keyboard = _input.Keyboards[0];
         float dt = (float)deltaTime;
-        
-        Vector3 moveDir = Vector3.Zero;
-        
-        if(keyboard.IsKeyPressed(Key.W)) moveDir.Z += 1;
-        if(keyboard.IsKeyPressed(Key.S)) moveDir.Z -= 1;
-        if(keyboard.IsKeyPressed(Key.A)) moveDir.X -= 1;
-        if(keyboard.IsKeyPressed(Key.D)) moveDir.X += 1;
-        if(keyboard.IsKeyPressed(Key.Space)) moveDir.Y += 1;
-        if(keyboard.IsKeyPressed(Key.ShiftLeft)) moveDir.Y -= 1;
-        
-        _camera.Move(moveDir, dt);
 
+        Vector3 moveDir = Vector3.Zero;
+
+        if (keyboard.IsKeyPressed(Key.W)) moveDir.Z += 1;
+        if (keyboard.IsKeyPressed(Key.S)) moveDir.Z -= 1;
+        if (keyboard.IsKeyPressed(Key.A)) moveDir.X -= 1;
+        if (keyboard.IsKeyPressed(Key.D)) moveDir.X += 1;
+        if (keyboard.IsKeyPressed(Key.Space)) moveDir.Y += 1;
+        if (keyboard.IsKeyPressed(Key.ShiftLeft)) moveDir.Y -= 1;
+
+        _camera.Move(moveDir, dt);
     }
 
     private static void OnRender(double deltaTime)
@@ -203,9 +209,15 @@ class Program
 
         _shader.Use();
 
+        Vector3 lightPos = new Vector3(2f, 2f, 2f);
+        Vector3 lightColor = new Vector3(1f, 1f, 1f);
+        
+        _shader.SetUniform("uLightPos", lightPos);
+        _shader.SetUniform("uLightColor", lightColor);
+        
         _texture.Bind();
         _shader.SetUniform("uTexture", 0);
-        
+
         float angle = (float)_window.Time;
 
         Matrix4x4 rotation = Matrix4x4.CreateRotationX(angle) * Matrix4x4.CreateRotationY(angle);

@@ -71,6 +71,14 @@ public class Shader : IDisposable
         if (location == -1) return;
         
         _gl.Uniform4(location, value);
+    }   
+    
+    public void SetUniform(string name, Vector3 value)
+    {
+        int location = _gl.GetUniformLocation(handle, name);
+        if (location == -1) return;
+        
+        _gl.Uniform3(location, value);
     }
     
     public void SetUniform(string name, Vector2 value)
