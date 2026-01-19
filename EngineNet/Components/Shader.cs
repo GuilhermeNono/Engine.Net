@@ -2,7 +2,7 @@
 using System.Reflection;
 using Silk.NET.OpenGL;
 
-namespace EngineNet.Shaders;
+namespace EngineNet.Components;
 
 public class Shader : IDisposable
 {

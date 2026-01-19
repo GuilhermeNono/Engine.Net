@@ -1,15 +1,16 @@
 ﻿using System.Numerics;
+using EngineNet.Components;
 using Silk.NET.Input;
 using Silk.NET.Maths;
 using Silk.NET.OpenGL;
 using Silk.NET.Windowing;
-using Shader = EngineNet.Shaders.Shader;
-using Texture = EngineNet.Shaders.Textures.Texture;
+using Shader = EngineNet.Components.Shader;
+using Texture = EngineNet.Components.Texture;
 
 namespace EngineNet;
 
-using Shaders_Shader = Shaders.Shader;
-using Textures_Texture = Shaders.Textures.Texture;
+using Shaders_Shader = Shader;
+using Textures_Texture = Texture;
 
 class Program
 {
@@ -19,6 +20,9 @@ class Program
     private static Shaders_Shader _shader;
     private static Textures_Texture _texture;
 
+    private static Camera _camera;
+    private static Vector2 _lastMousePos;
+    
     private static int _width = 800;
     private static int _height = 600;
 
@@ -81,7 +85,7 @@ class Program
 
     static void Main()
     {
-        var options = WindowOptions.Default;
+        WindowOptions options = WindowOptions.Default;
         options.Size = new Vector2D<int>(_height, _width);
         options.Title = "Game Test";
         
@@ -109,16 +113,22 @@ class Program
     private static void OnLoad()
     {
         _gl = _window.CreateOpenGL();
+
+        _input = _window.CreateInput();
+        _camera = new Camera(new Vector3(0, 0, 3f));
         _shader = new Shaders_Shader(_gl, "shader.vert", "shader.frag");
         _texture = new Textures_Texture(_gl, "image.png");
 
+        IMouse mouse = _input.Mice[0];
+        mouse.Cursor.CursorMode = CursorMode.Raw;
+        mouse.MouseMove += OnMouseMove;
+        
         _vao = _gl.GenVertexArray();
         _gl.BindVertexArray(_vao);
 
         _vbo = _gl.GenBuffer();
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
 
-        _input = _window.CreateInput();
         foreach (var keyboard in _input.Keyboards)
         {
             keyboard.KeyDown += (_, key, _) =>
@@ -153,8 +163,38 @@ class Program
         _gl.BindVertexArray(0);
     }
 
+    private static void OnMouseMove(IMouse mouse, Vector2 position)
+    {
+        if (_lastMousePos == default)
+        {
+            _lastMousePos = position;
+            return;
+        }
+        
+        float xOffset = position.X - _lastMousePos.X;
+        float yOffset = _lastMousePos.Y - position.Y;
+        _lastMousePos = position;
+        
+        _camera.Look(xOffset, yOffset);
+    }
+
     private static void OnUpdate(double deltaTime)
     {
+
+        IKeyboard keyboard = _input.Keyboards[0];
+        float dt = (float)deltaTime;
+        
+        Vector3 moveDir = Vector3.Zero;
+        
+        if(keyboard.IsKeyPressed(Key.W)) moveDir.Z += 1;
+        if(keyboard.IsKeyPressed(Key.S)) moveDir.Z -= 1;
+        if(keyboard.IsKeyPressed(Key.A)) moveDir.X -= 1;
+        if(keyboard.IsKeyPressed(Key.D)) moveDir.X += 1;
+        if(keyboard.IsKeyPressed(Key.Space)) moveDir.Y += 1;
+        if(keyboard.IsKeyPressed(Key.ShiftLeft)) moveDir.Y -= 1;
+        
+        _camera.Move(moveDir, dt);
+
     }
 
     private static void OnRender(double deltaTime)
@@ -169,7 +209,7 @@ class Program
         float angle = (float)_window.Time;
 
         Matrix4x4 rotation = Matrix4x4.CreateRotationX(angle) * Matrix4x4.CreateRotationY(angle);
-        Matrix4x4 view = Matrix4x4.CreateTranslation(0f, 0f, -2f);
+        Matrix4x4 view = _camera.GetViewMatrix();
         Matrix4x4 projection = Matrix4x4.CreatePerspectiveFieldOfView(
             (float)(Math.PI / 4.0),
             (float)_width / _height,

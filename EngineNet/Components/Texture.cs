@@ -3,7 +3,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
 
-namespace EngineNet.Shaders.Textures;
+namespace EngineNet.Components;
 
 public class Texture : IDisposable
 {
