@@ -13,6 +13,8 @@ uniform vec3 uLightColor;
 void main(){
     FragColor = texture(uTexture, fTexCoords);
     
+    if (FragColor.a < 0.1) discard;
+
     float ambientStrength = 0.2;
     vec3 ambient = ambientStrength * uLightColor;
     

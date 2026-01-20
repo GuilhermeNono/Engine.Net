@@ -42,18 +42,18 @@ public class Texture : IDisposable
         }
 
         // Configurações de repetição e filtragem (Essencial para não ver pixels borrados ou pretos)
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureWrapS, (int)GLEnum.Repeat);
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureWrapT, (int)GLEnum.Repeat);
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureMinFilter, (int)GLEnum.LinearMipmapLinear);
-        gl.TexParameter(GLEnum.Texture2D, GLEnum.TextureMagFilter, (int)GLEnum.Linear);
+        gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapS, (int)GLEnum.Repeat);
+        gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureWrapT, (int)GLEnum.Repeat);
+        gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)GLEnum.LinearMipmapLinear);
+        gl.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)GLEnum.Linear);
 
-        gl.GenerateMipmap(GLEnum.Texture2D);
+        gl.GenerateMipmap(TextureTarget.Texture2D);
     }
 
     public void Bind(TextureUnit unit = TextureUnit.Texture0)
     {
         _gl.ActiveTexture(unit);
-        _gl.BindTexture(GLEnum.Texture2D, _handle);
+        _gl.BindTexture(TextureTarget.Texture2D, _handle);
     }
 
     public void Dispose() => _gl.DeleteTexture(_handle);

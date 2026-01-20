@@ -6,8 +6,8 @@ namespace EngineNet.Components;
 
 public class Shader : IDisposable
 {
-    public uint handle;
-    private GL _gl;
+    public readonly uint Handle;
+    private readonly GL _gl;
 
     private string GetShaderDataFromAssembly(ShaderType type, string path)
     {
@@ -37,18 +37,18 @@ public class Shader : IDisposable
         uint vertex = CompileShader(Silk.NET.OpenGL.ShaderType.VertexShader, vertexShaderSource);
         uint fragment = CompileShader(Silk.NET.OpenGL.ShaderType.FragmentShader, fragmentShaderSource);
         
-        handle = gl.CreateProgram();
+        Handle = gl.CreateProgram();
         
-        gl.AttachShader(handle, vertex);
-        gl.AttachShader(handle, fragment);
-        gl.LinkProgram(handle);
+        gl.AttachShader(Handle, vertex);
+        gl.AttachShader(Handle, fragment);
+        gl.LinkProgram(Handle);
 
-        gl.GetProgram(handle, ProgramPropertyARB.LinkStatus, out int linkStatus);
+        gl.GetProgram(Handle, ProgramPropertyARB.LinkStatus, out int linkStatus);
         if (linkStatus == 0)
-            throw new Exception($"Erro ao linkar o shader: {gl.GetProgramInfoLog(handle)}");
+            throw new Exception($"Erro ao linkar o shader: {gl.GetProgramInfoLog(Handle)}");
         
-        gl.DetachShader(handle, vertex);
-        gl.DetachShader(handle, fragment);
+        gl.DetachShader(Handle, vertex);
+        gl.DetachShader(Handle, fragment);
         gl.DeleteShader(vertex);
         gl.DeleteShader(fragment);
     }
@@ -63,11 +63,11 @@ public class Shader : IDisposable
         return status == 0 ? throw new Exception($"Shader compile error {type}: {code}") : shader;
     }
     
-    public void Use() => _gl.UseProgram(handle);
+    public void Use() => _gl.UseProgram(Handle);
 
     public void SetUniform(string name, Vector4 value)
     {
-        int location = _gl.GetUniformLocation(handle, name);
+        int location = _gl.GetUniformLocation(Handle, name);
         if (location == -1) return;
         
         _gl.Uniform4(location, value);
@@ -75,7 +75,7 @@ public class Shader : IDisposable
     
     public void SetUniform(string name, Vector3 value)
     {
-        int location = _gl.GetUniformLocation(handle, name);
+        int location = _gl.GetUniformLocation(Handle, name);
         if (location == -1) return;
         
         _gl.Uniform3(location, value);
@@ -83,7 +83,7 @@ public class Shader : IDisposable
     
     public void SetUniform(string name, Vector2 value)
     {
-        int location = _gl.GetUniformLocation(handle, name);
+        int location = _gl.GetUniformLocation(Handle, name);
         if (location == -1) return;
         
         _gl.Uniform2(location, value);
@@ -91,14 +91,11 @@ public class Shader : IDisposable
     
     public void SetUniform(string name, int value)
     {
-        int location = _gl.GetUniformLocation(handle, name);
+        int location = _gl.GetUniformLocation(Handle, name);
         if (location == -1) return;
         
         _gl.Uniform1(location, value);
     }
 
-    public void Dispose()
-    {
-        // TODO release managed resources here
-    }
+    public void Dispose() => _gl.DeleteProgram(Handle);
 }

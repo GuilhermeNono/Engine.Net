@@ -19,6 +19,7 @@ class Program
     private static IInputContext _input;
     private static Shaders_Shader _shader;
     private static Textures_Texture _texture;
+    private static Model _model;
 
     private static Camera _camera;
     private static Vector2 _lastMousePos;
@@ -26,72 +27,10 @@ class Program
     private static int _width = 800;
     private static int _height = 600;
 
-    private static uint _vbo;
-    private static uint _vao;
-
-    private static readonly float[] _vertices =
-    [
-        // POSIÇÃO (X, Y, Z)   // TEXTURE (U, V)   // NORMAL (NX, NY, NZ)
-
-        // Face Frontal (Aponta para Z Positivo: 0, 0, 1)
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-        0.5f, -0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-
-        0.5f, 0.5f, 0.5f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        -0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f,
-        -0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f,
-
-        // Face Traseira (Aponta para Z Negativo: 0, 0, -1)
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 0.0f, -1.0f,
-        0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f,
-
-        // Face Esquerda (Aponta para X Negativo: -1, 0, 0)
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, 0.5f, 1.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-
-        -0.5f, 0.5f, 0.5f, 1.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, -1.0f, 0.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f,
-
-        // Face Direita (Aponta para X Positivo: 1, 0, 0)
-        0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        0.5f, 0.5f, 0.5f, 0.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-        0.5f, -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-
-        // Face Superior (Aponta para Y Positivo: 0, 1, 0)
-        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.5f, 0.5f, 0.5f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-
-        0.5f, 0.5f, -0.5f, 1.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-        -0.5f, 0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f,
-        -0.5f, 0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f,
-
-        // Face Inferior (Aponta para Y Negativo: 0, -1, 0)
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-        0.5f, -0.5f, -0.5f, 1.0f, 0.0f, 0.0f, -1.0f, 0.0f,
-        0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-
-        0.5f, -0.5f, 0.5f, 1.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-        -0.5f, -0.5f, 0.5f, 0.0f, 1.0f, 0.0f, -1.0f, 0.0f,
-        -0.5f, -0.5f, -0.5f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f
-    ];
-
     static void Main()
     {
         WindowOptions options = WindowOptions.Default;
-        options.Size = new Vector2D<int>(_height, _width);
+        options.Size = new Vector2D<int>(_width, _height);
         options.Title = "Game Test";
 
         Silk.NET.Windowing.Glfw.GlfwWindowing.RegisterPlatform();
@@ -119,6 +58,7 @@ class Program
     {
         _gl = _window.CreateOpenGL();
 
+        _model = new Model(_gl, "character.obj");
         _input = _window.CreateInput();
         _camera = new Camera(new Vector3(0, 0, 3f));
         _shader = new Shaders_Shader(_gl, "shader.vert", "shader.frag");
@@ -128,12 +68,6 @@ class Program
         mouse.Cursor.CursorMode = CursorMode.Raw;
         mouse.MouseMove += OnMouseMove;
 
-        _vao = _gl.GenVertexArray();
-        _gl.BindVertexArray(_vao);
-
-        _vbo = _gl.GenBuffer();
-        _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
-
         foreach (var keyboard in _input.Keyboards)
         {
             keyboard.KeyDown += (_, key, _) =>
@@ -142,33 +76,8 @@ class Program
             };
         }
 
-        unsafe
-        {
-            fixed (float* buf = _vertices)
-            {
-                _gl.BufferData(BufferTargetARB.ArrayBuffer, (nuint)(_vertices.Length * sizeof(float)), buf,
-                    BufferUsageARB.StaticDraw);
-            }
-        }
-
-        unsafe
-        {
-            uint stride = 8 * sizeof(float);
-
-            _gl.VertexAttribPointer(0, 3, VertexAttribPointerType.Float, false, stride, 0);
-            _gl.EnableVertexAttribArray(0);
-
-            _gl.VertexAttribPointer(1, 2, VertexAttribPointerType.Float, false, stride, 3 * sizeof(float));
-            _gl.EnableVertexAttribArray(1);
-            
-            _gl.VertexAttribPointer(2, 3, VertexAttribPointerType.Float, false, stride, 5 * sizeof(float));
-            _gl.EnableVertexAttribArray(2);
-        }
-
-
-        _gl.BindBuffer(BufferTargetARB.ArrayBuffer, 0);
         _gl.Enable(EnableCap.DepthTest);
-        _gl.BindVertexArray(0);
+        _gl.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     }
 
     private static void OnMouseMove(IMouse mouse, Vector2 position)
@@ -215,7 +124,7 @@ class Program
         _shader.SetUniform("uLightPos", lightPos);
         _shader.SetUniform("uLightColor", lightColor);
         
-        _texture.Bind();
+        _texture.Bind(TextureUnit.Texture0);
         _shader.SetUniform("uTexture", 0);
 
         float angle = (float)_window.Time;
@@ -228,9 +137,9 @@ class Program
             0.1f,
             100.0f);
 
-        int modelLoc = _gl.GetUniformLocation(_shader.handle, "uModel");
-        int viewLoc = _gl.GetUniformLocation(_shader.handle, "uView");
-        int projectionLoc = _gl.GetUniformLocation(_shader.handle, "uProjection");
+        int modelLoc = _gl.GetUniformLocation(_shader.Handle, "uModel");
+        int viewLoc = _gl.GetUniformLocation(_shader.Handle, "uView");
+        int projectionLoc = _gl.GetUniformLocation(_shader.Handle, "uProjection");
 
         unsafe
         {
@@ -239,11 +148,14 @@ class Program
             _gl.UniformMatrix4(projectionLoc, 1, false, (float*)&projection);
         }
 
-        _gl.BindVertexArray(_vao);
-        _gl.DrawArrays(PrimitiveType.Triangles, 0, 36);
+        _model.Draw(_shader);
     }
 
     private static void OnClose()
     {
+        _model.Dispose();
+        _shader.Dispose();
+        _texture.Dispose();
+        _input.Dispose();
     }
 }

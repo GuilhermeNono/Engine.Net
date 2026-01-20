@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="AssimpNet" Version="4.1.0" />
       <PackageReference Include="Silk.NET" Version="2.22.0" />
       <PackageReference Include="Silk.NET.Windowing.Glfw" Version="2.22.0" />
       <PackageReference Include="Silk.NET.Input.Glfw" Version="2.22.0" />
@@ -22,6 +23,18 @@
       <EmbeddedResource Include="Shaders\Fragments\shader.frag" />
       <None Remove="Shaders\Textures\Unit\image.png" />
       <EmbeddedResource Include="Shaders\Textures\Unit\image.png" />
+      <None Remove="Models\character.obj" />
+      <EmbeddedResource Include="Models\character.obj">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+      <None Remove="Models\character.mtl" />
+      <EmbeddedResource Include="Models\character.mtl">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Models\" />
     </ItemGroup>
 
 </Project>
