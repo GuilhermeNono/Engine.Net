@@ -18,19 +18,17 @@
 
     <ItemGroup>
       <None Remove="Shaders\Vertex\shader.vert" />
+      <EmbeddedResource Include="Models\Textures\texture-b.png" />
+      <EmbeddedResource Include="Shaders\Fragments\shader.frag" />
       <EmbeddedResource Include="Shaders\Vertex\shader.vert" />
       <None Remove="Shaders\Fragments\shader.frag" />
-      <EmbeddedResource Include="Shaders\Fragments\shader.frag" />
       <None Remove="Models\character.obj" />
-      <EmbeddedResource Include="Models\character.obj">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </EmbeddedResource>
       <None Remove="Models\character.mtl" />
-      <EmbeddedResource Include="Models\character.mtl">
+      <None Remove="Shaders\Textures\Unit\texture.png" />
+      <None Remove="Models\character-b.obj" />
+      <EmbeddedResource Include="Models\character-b.obj">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
-      <None Remove="Shaders\Textures\Unit\texture.png" />
-      <EmbeddedResource Include="Shaders\Textures\Unit\texture.png" />
     </ItemGroup>
 
     <ItemGroup>

@@ -24,16 +24,14 @@ class Program
     private static Camera _camera;
     private static Vector2 _lastMousePos;
 
-    private static int _width = 800;
-    private static int _height = 600;
+    private static int _width = 1280;
+    private static int _height = 720;
 
     static void Main()
     {
         WindowOptions options = WindowOptions.Default;
         options.Size = new Vector2D<int>(_width, _height);
         options.Title = "Game Test";
-
-        Silk.NET.Windowing.Glfw.GlfwWindowing.RegisterPlatform();
 
         _window = Window.Create(options);
 
@@ -58,11 +56,11 @@ class Program
     {
         _gl = _window.CreateOpenGL();
 
-        _model = new Model(_gl, "Models/character.obj");
+        _model = new Model(_gl, "Models/character-b.obj");
         _input = _window.CreateInput();
         _camera = new Camera(new Vector3(0, 0, 3f));
         _shader = new Shaders_Shader(_gl, "shader.vert", "shader.frag");
-        _texture = new Textures_Texture(_gl, "texture.png");
+        _texture = new Textures_Texture(_gl, "texture-b.png");
 
         IMouse mouse = _input.Mice[0];
         mouse.Cursor.CursorMode = CursorMode.Raw;
