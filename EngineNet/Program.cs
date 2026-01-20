@@ -116,19 +116,22 @@ class Program
 
         _shader.Use();
 
-        Vector3 lightPos = new (2f, 2f, 2f);
-        Vector3 lightColor = new (1f, 1f, 1f);
+        Vector3 lightPos = new(2f, 2f, 2f);
+
+        Vector3 lightColor = Rgb(250, 211, 125);
+        
+        float lightIntensity = 2f;
         
         _shader.SetUniform("uLightPos", lightPos);
         _shader.SetUniform("uLightColor", lightColor);
+        _shader.SetUniform("uLightIntensity", lightIntensity);
+        
         _shader.SetUniform("uTexture", 0);
         _shader.SetUniform("uViewPos", _camera.Position);
         
         _texture.Bind(TextureUnit.Texture0);
 
-        float angle = (float)_window.Time;
-
-        Matrix4x4 rotation = Matrix4x4.CreateRotationX(angle) * Matrix4x4.CreateRotationY(angle);
+        Matrix4x4 rotation = Matrix4x4.Identity;
         Matrix4x4 view = _camera.GetViewMatrix();
         Matrix4x4 projection = Matrix4x4.CreatePerspectiveFieldOfView(
             (float)(Math.PI / 4.0),
@@ -156,4 +159,6 @@ class Program
         _shader.Dispose();
         _input.Dispose();
     }
+
+    private static Vector3 Rgb(float r, float g, float b) => new (r / 255, g / 255, b / 255);
 }

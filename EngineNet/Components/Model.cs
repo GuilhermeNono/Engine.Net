@@ -61,10 +61,12 @@ public class Model : IDisposable
         // 1. Converter Vértices
         for (int i = 0; i < mesh.VertexCount; i++)
         {
-            Vertex vertex = new Vertex();
-
             // Posição
-            vertex.Position = new Vector3(mesh.Vertices[i].X, mesh.Vertices[i].Y, mesh.Vertices[i].Z);
+            
+            Vertex vertex = new Vertex
+            {
+                Position = new Vector3(mesh.Vertices[i].X, mesh.Vertices[i].Y, mesh.Vertices[i].Z)
+            };
 
             // Normais
             if (mesh.HasNormals)

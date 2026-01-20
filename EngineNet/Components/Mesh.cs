@@ -9,7 +9,7 @@ public class Mesh : IDisposable
 {
     private uint _vao, _vbo, _ebo;
     private readonly GL _gl;
-    private int _indicesCount;
+    private readonly int _indicesCount;
 
     public Mesh(GL gl, List<Vertex> vertices, List<uint> indices)
     {
@@ -27,8 +27,8 @@ public class Mesh : IDisposable
         _ebo = _gl.GenBuffer();
 
         _gl.BindVertexArray(_vao);
-
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
+        
         fixed (void* v = CollectionsMarshal.AsSpan(vertices))
         {
             _gl.BufferData(BufferTargetARB.ArrayBuffer, (nuint)(vertices.Count * stride), v,
@@ -36,6 +36,7 @@ public class Mesh : IDisposable
         }
 
         _gl.BindBuffer(BufferTargetARB.ElementArrayBuffer, _ebo);
+        
         fixed (void* i = CollectionsMarshal.AsSpan(indices))
         {
             _gl.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint)(indices.Count * sizeof(uint)), i,
