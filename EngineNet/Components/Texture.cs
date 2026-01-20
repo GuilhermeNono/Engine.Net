@@ -20,7 +20,7 @@ public class Texture : IDisposable
         using var img = Image.Load<Rgba32>(AssemblyHelper.GetStreamFromResource($"EngineNet.Shaders.Textures.Unit.{path}"));
 
         //Tip: O OpenGL le de cima para baixo. E necessario inverter
-        img.Mutate(x => x.Flip(FlipMode.Vertical));
+        // img.Mutate(x => x.Flip(FlipMode.Vertical));
 
         // 1. Criar um buffer para armazenar todos os pixels da imagem
         // (Largura * Altura * 4 bytes por pixel RGBA)

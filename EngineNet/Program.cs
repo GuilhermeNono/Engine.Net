@@ -58,11 +58,11 @@ class Program
     {
         _gl = _window.CreateOpenGL();
 
-        _model = new Model(_gl, "character.obj");
+        _model = new Model(_gl, "Models/character.obj");
         _input = _window.CreateInput();
         _camera = new Camera(new Vector3(0, 0, 3f));
         _shader = new Shaders_Shader(_gl, "shader.vert", "shader.frag");
-        _texture = new Textures_Texture(_gl, "image.png");
+        _texture = new Textures_Texture(_gl, "texture.png");
 
         IMouse mouse = _input.Mice[0];
         mouse.Cursor.CursorMode = CursorMode.Raw;
@@ -118,14 +118,15 @@ class Program
 
         _shader.Use();
 
-        Vector3 lightPos = new Vector3(2f, 2f, 2f);
-        Vector3 lightColor = new Vector3(1f, 1f, 1f);
+        Vector3 lightPos = new (2f, 2f, 2f);
+        Vector3 lightColor = new (1f, 1f, 1f);
         
         _shader.SetUniform("uLightPos", lightPos);
         _shader.SetUniform("uLightColor", lightColor);
+        _shader.SetUniform("uTexture", 0);
+        _shader.SetUniform("uViewPos", _camera.Position);
         
         _texture.Bind(TextureUnit.Texture0);
-        _shader.SetUniform("uTexture", 0);
 
         float angle = (float)_window.Time;
 
@@ -155,7 +156,6 @@ class Program
     {
         _model.Dispose();
         _shader.Dispose();
-        _texture.Dispose();
         _input.Dispose();
     }
 }

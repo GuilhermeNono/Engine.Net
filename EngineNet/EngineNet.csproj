@@ -21,8 +21,6 @@
       <EmbeddedResource Include="Shaders\Vertex\shader.vert" />
       <None Remove="Shaders\Fragments\shader.frag" />
       <EmbeddedResource Include="Shaders\Fragments\shader.frag" />
-      <None Remove="Shaders\Textures\Unit\image.png" />
-      <EmbeddedResource Include="Shaders\Textures\Unit\image.png" />
       <None Remove="Models\character.obj" />
       <EmbeddedResource Include="Models\character.obj">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -31,6 +29,8 @@
       <EmbeddedResource Include="Models\character.mtl">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </EmbeddedResource>
+      <None Remove="Shaders\Textures\Unit\texture.png" />
+      <EmbeddedResource Include="Shaders\Textures\Unit\texture.png" />
     </ItemGroup>
 
     <ItemGroup>

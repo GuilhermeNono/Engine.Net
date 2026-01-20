@@ -60,7 +60,12 @@ public class Shader : IDisposable
         _gl.CompileShader(shader);
         
         _gl.GetShader(shader, ShaderParameterName.CompileStatus, out int status);
-        return status == 0 ? throw new Exception($"Shader compile error {type}: {code}") : shader;
+        if (status == 0)
+        {
+            string infoLog = _gl.GetShaderInfoLog(shader);
+            throw new Exception($"Shader compile error {type}: {infoLog}\nCode:\n{code}");
+        }
+        return shader;
     }
     
     public void Use() => _gl.UseProgram(Handle);
